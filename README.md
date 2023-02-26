@@ -13,7 +13,7 @@ Untuk mengakses administrator page pada django, pengguna dapat menggunakan admin
 
 Jika pengguna ingin membuat admin sendiri, maka dapat menjalankan perintah pada terminal sebagai berikut :
 1. python3 manage.py createsuperuser
-<br>
+
 Kemudian, isi data pada terminal.<br>
 
 Setelah admin terbuat, pengguna dapat mengakses pada link http://localhost:8000/admin.<br>
