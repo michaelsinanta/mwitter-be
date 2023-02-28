@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
-from .models import Tweet
-from .serializers import TweetSerializer
+from .models import Tweet, Comment
+from .serializers import TweetSerializer, CommentSerializer
 from rest_framework.response import Response
 from rest_framework import permissions, status
 from users.serializers import UserSerializer
@@ -35,7 +35,39 @@ class TweetCreate(APIView):
             }, status=status.HTTP_201_CREATED)
         else :
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+        
+class CommentDetail(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    def get(self, request, pk):
+        try : 
+            comments = Comment.objects.filter(original_tweet = pk)
+            serializer = CommentSerializer(comments, many=True)
+            return Response(serializer.data)
+        except :
+            return Response({
+                'error' : 'Comment does not exist'
+            }, status=status.HTTP_404_NOT_FOUND)
+        
+    def post(self, request, pk):
+        user_info = UserSerializer(request.user)
+        serializer = CommentSerializer(
+            data = {
+                'comment_user': request.user.id,
+                'comment_author': user_info.data['username'],
+                'comment_picture': user_info.data['photo_profile'],
+                'comment_content': request.data["comment_content"],
+                'original_tweet' : pk
+            }
+        )
+        if serializer.is_valid():
+            serializer.save()
+            return Response({
+                'status': "Create success",
+                'data': serializer.data
+            }, status=status.HTTP_201_CREATED)
+        else :
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 class MyTweetList(APIView):
     permission_classes = (permissions.IsAuthenticated,)
     def get(self, request):
