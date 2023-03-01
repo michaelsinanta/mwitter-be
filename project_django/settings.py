@@ -28,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*',]
 
+CSRF_TRUSTED_ORIGINS = [f'https://mwitter.up.railway.app']
+
 # REST_FRAMEWORK: A constant with the permission and Auth classes for default cases.
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
