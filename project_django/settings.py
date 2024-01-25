@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-j4l+p_rg+ci(7n@&#cc8az!i!q-9vbfguwx$6f+t7=%o$h(y=g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,[::1],mwitter-michaelsinanta.koyeb.app").split(",")
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', 'mwitter-michaelsinanta.koyeb.app']
 
 CSRF_TRUSTED_ORIGINS = [f'https://mwitter.up.railway.app']
 
